@@ -5,7 +5,7 @@
 
 using namespace std;
 
-bool validaEmail(const string& email)
+bool validaEmail(string& email)
 {
    regex pattern
       ("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
