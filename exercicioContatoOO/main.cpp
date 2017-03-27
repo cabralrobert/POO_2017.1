@@ -1,10 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <regex>
+#include <algorithm>
 
 using namespace std;
 
-bool validaEmail(const std::string& email)
+bool validaEmail(const string& email)
 {
    regex pattern
       ("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
@@ -18,7 +19,7 @@ bool verificaNumeros(string num){
         if(num[i] < '0' && num[i] > '9')
             return false;
 
-        i = i + 1;
+        i++;
     }
     return true;
 }
@@ -72,6 +73,12 @@ public:
     }
 
     bool rmTelefone(string numero){
+        auto iterador = std::find(lista_de_telefones.begin(), lista_de_telefones.end(), numero);
+
+        if(iterador == lista_de_telefones.end())
+            return false;
+
+        lista_de_telefones.erase(iterador);
         return true;
     }
 
@@ -89,22 +96,27 @@ int main()
 
     Contato contato("Robert");
     contato.setEmail("robertcabral@alu.ufc.br");
-    cout << "Usuario: " << contato.getNome();
-    cout << "\nEmail: " << contato.getEmail() << endl;
+    cout << "Usuario: " << contato.getNome() << endl;
+    cout << "Email: " << contato.getEmail() << endl;
 
     contato.addTelefone("88996638768");
     contato.addTelefone("88996638765");
     contato.addTelefone("88996638268");
 
-    cout << "#########LISTA#######" << endl;
+    cout << "\n#########LISTA#######" << endl;
 
-    for(auto valor : contato.getTelefones()){
+    for(string valor : contato.getTelefones())
         cout << valor << endl;
-    }
-
-    cout << "Quantidade: " << contato.qtdTelefones() << endl;
 
 
+    contato.rmTelefone("88996638268");
+
+    cout << "\n#########LISTA#######" << endl;
+
+    for(string valor : contato.getTelefones())
+        cout << valor << endl;
+
+    cout << "\nQuantidade: " << contato.qtdTelefones() << endl;
 
     return 0;
 }
