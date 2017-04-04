@@ -7,7 +7,7 @@ using namespace std;
 struct Pote{
     string sabor;
     int qtdBolas;
-    int posicao;
+    int posicao;    
 };
 
 class Sorvete{

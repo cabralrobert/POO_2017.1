@@ -95,13 +95,13 @@ int main()
 {
 
     Contato contato("Robert");
-    contato.setEmail("robertcabral@alu.ufc.br");
+    cout << contato.setEmail("robertcabral@alu.ufc.br") << endl;
     cout << "Usuario: " << contato.getNome() << endl;
     cout << "Email: " << contato.getEmail() << endl;
 
-    contato.addTelefone("88996638768");
-    contato.addTelefone("88996638765");
-    contato.addTelefone("88996638268");
+    cout << contato.addTelefone("88996638768") << endl;
+    cout << contato.addTelefone("88996638765") << endl;
+    cout << contato.addTelefone("88996638268") << endl;
 
     cout << "\n#########LISTA#######" << endl;
 
@@ -109,7 +109,7 @@ int main()
         cout << valor << endl;
 
 
-    contato.rmTelefone("88996638268");
+    cout << contato.rmTelefone("88996638268") << endl;
 
     cout << "\n#########LISTA#######" << endl;
 
