@@ -16,7 +16,7 @@ private:
 
 public:
     Contato(string nome){
-        this->nome = nome;
+        this->nome = nome;        
     }
 
     void setNome(string nome){

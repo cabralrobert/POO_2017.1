@@ -25,8 +25,8 @@ public:
                 contatos.erase(contatos.begin() + i);
                 return true;
             }
-            return false;
         }
+        return false;
     }
 
     Contato *procurarContato(string nome){
@@ -52,26 +52,71 @@ public:
 
 int main()
 {
-    Contato contato("Robert");
-    contato.setEmail("robertcabral@alu.ufc.br");
-    contato.addTelefone("88996638768");
-    contato.addTelefone("88992317434");
-    contato.addTelefone("88992eww7434");
-    //contato.showContatos();
-
+    int op = -1;
     Agenda agenda;
-    cout << agenda.adicionaContato(contato) << endl;
+    string nome, email, telefone;
+    while(op){
+        cout << "Digite 1 para adicionar contato;" << endl;
+        cout << "Digite 2 para remover contato;" << endl;
+        cout << "Digite 3 para procurar contato;" << endl;
+        cout << "Digite 4 para procurar contato por substring;" << endl;
+        cout << "Digite 5 para mostrar todos os contato;" << endl;
+        cout << "Digite 6 para adicionar email ao contato;" << endl;
+        cout << "Digite 7 para adicionar telefone ao contato;" << endl;
+        cout << "Digite 0 para sair;" << endl;
+        cin >> op;
 
-    agenda.adicionaContato(Contato("Teste"));
-    agenda.adicionaContato(Contato("Teste3"));
-    agenda.adicionaContato(Contato("Tesert"));
+        switch(op){
+        case 1:
+            cout << "Digite o nome do contato: ";
+            cin >> nome;
+            agenda.adicionaContato(Contato(nome));
+            break;
 
-    vector<Contato> aux;
+        case 2:
+            cout << "Digite o nome do contato: ";
+            cin >> nome;
+            agenda.removerContato(nome);
+            break;
 
-    aux = agenda.procurarPorSubstring("t");
+        case 3:
+            cout << "Digite o nome do contato: ";
+            cin >> nome;
+            agenda.procurarContato(nome)->showContatos();
+            break;
 
-    for(auto i : aux)
-        i.showContatos();
+        case 4:
+            cout << "Digite a substring: ";
+            cin >> nome;
+            for(Contato i : agenda.procurarPorSubstring(nome))
+                i.showContatos();
+            break;
 
+        case 5:
+            for(Contato i : agenda.pegarContatos())
+                i.showContatos();
+            break;
+
+        case 6:
+            cout << "Digite o nome do contato que deseja adicionar o email: ";
+            cin >> nome;
+            cout << "Digite o email: ";
+            cin >> email;
+            agenda.procurarContato(nome)->setEmail(email);
+            break;
+
+        case 7:
+            cout << "Digite o nome do contato que deseja adicionar o telefone: ";
+            cin >> nome;
+            cout << "Digite o telefone: ";
+            cin >> telefone;
+            agenda.procurarContato(nome)->addTelefone(telefone);
+            break;
+
+        default:
+            break;
+        }
+
+    }
     return 0;
 }
