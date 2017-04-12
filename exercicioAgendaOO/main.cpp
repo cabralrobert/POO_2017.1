@@ -1,4 +1,5 @@
 #include "contato.h"
+#include <unistd.h>
 
 using namespace std;
 
@@ -56,7 +57,7 @@ int main()
     Agenda agenda;
     string nome, email, telefone;
     while(op){
-        cout << "Digite 1 para adicionar contato;" << endl;
+        cout << "\nDigite 1 para adicionar contato;" << endl;
         cout << "Digite 2 para remover contato;" << endl;
         cout << "Digite 3 para procurar contato;" << endl;
         cout << "Digite 4 para procurar contato por substring;" << endl;
@@ -64,25 +65,43 @@ int main()
         cout << "Digite 6 para adicionar email ao contato;" << endl;
         cout << "Digite 7 para adicionar telefone ao contato;" << endl;
         cout << "Digite 0 para sair;" << endl;
+        cout << "\nDigite a opção: ";
         cin >> op;
 
         switch(op){
         case 1:
             cout << "Digite o nome do contato: ";
             cin >> nome;
-            agenda.adicionaContato(Contato(nome));
+            if(agenda.adicionaContato(Contato(nome)))
+                cout << "\nAdicionado!\n";
+            else
+                cout << "\nNão Adicionado!\n";
+
+            sleep(2);
+            system("clear");
             break;
 
         case 2:
             cout << "Digite o nome do contato: ";
             cin >> nome;
-            agenda.removerContato(nome);
+            if(agenda.removerContato(nome))
+                cout << "\nContato removido\n" << endl;
+            else
+                cout << "\nContato não removido\n" << endl;
+
+            sleep(2);
+            system("clear");
             break;
 
         case 3:
             cout << "Digite o nome do contato: ";
             cin >> nome;
+            cout << "\n";
             agenda.procurarContato(nome)->showContatos();
+            cout << "\n";
+
+            sleep(5);
+            system("clear");
             break;
 
         case 4:
@@ -90,27 +109,45 @@ int main()
             cin >> nome;
             for(Contato i : agenda.procurarPorSubstring(nome))
                 i.showContatos();
+
+            sleep(5);
+            system("clear");
             break;
 
         case 5:
             for(Contato i : agenda.pegarContatos())
                 i.showContatos();
+
+            sleep(5);
+            system("clear");
             break;
 
         case 6:
-            cout << "Digite o nome do contato que deseja adicionar o email: ";
+            cout << "\nDigite o nome do contato que deseja adicionar o email: ";
             cin >> nome;
             cout << "Digite o email: ";
             cin >> email;
-            agenda.procurarContato(nome)->setEmail(email);
+            if(agenda.procurarContato(nome)->setEmail(email))
+                cout << "\nContato alterado!\n" << endl;
+            else
+                cout << "\nDigite um email valido!\n" << endl;
+
+            sleep(2);
+            system("clear");
             break;
 
         case 7:
-            cout << "Digite o nome do contato que deseja adicionar o telefone: ";
+            cout << "\nDigite o nome do contato que deseja adicionar o telefone: ";
             cin >> nome;
             cout << "Digite o telefone: ";
             cin >> telefone;
-            agenda.procurarContato(nome)->addTelefone(telefone);
+            if(agenda.procurarContato(nome)->addTelefone(telefone))
+                cout << "\nContato alterado!" << endl;
+            else
+                cout << "\nDigite um email valido!" << endl;
+
+            sleep(2);
+            system("clear");
             break;
 
         default:
