@@ -14,6 +14,7 @@ private:
     vector<Cliente> clientes;
     vector<Servico> servicos;
     float saldo;
+    int i;
 
 public:
     ClinicaVeterinaria(){
@@ -26,6 +27,10 @@ public:
 
     bool addCliente(string cpf){
         Cliente cliente;
+        for(auto i : clientes)
+            if(i.getCPF() == cpf)
+                return false;
+
         cliente.setCPF(cpf);
         clientes.push_back(cliente);
         return true;
@@ -45,6 +50,8 @@ public:
         for(int i = 0; i < (int) clientes.size(); i++)
             if(clientes[i].getCPF() == cpf)
                 return &clientes[i];
+
+        return NULL;
     }
 
     bool addServico(string nome, float preco){
@@ -55,11 +62,11 @@ public:
         return true;
     }
 
-    Servico getServico(string nome){
+    Servico* getServico(string nome){
         for(int i = 0; i < (int)servicos.size(); i++)
             if(servicos[i].getNome() == nome)
-                return servicos[i];sleep(2);
-        system("clear");
+                return &servicos[i];
+        return NULL;
     }
 
     bool rmServico(string nome){
@@ -73,15 +80,22 @@ public:
     }
 
     bool venderServico(string servico, string cpf, string animal){
-        Servico serv = getServico(servico);
-        Cliente* clie = getCliente(cpf);
-        Animal anim = clie->getAnimalNome(animal);
-        Venda venda(serv, *clie, anim);
 
-        saldo += venda.getValor();
-        vendas.push_back(venda);
+        Cliente* clie = getCliente(cpf);;
+        Servico* serv = getServico(servico);
+        if(serv != NULL && clie != NULL){
+            Animal* anim = clie->getAnimalNome(animal);
+            if(anim != NULL){
+                Venda venda(*serv, *clie, *anim, i);
+                i = venda.getI();
+                saldo += venda.getValor();
+                vendas.push_back(venda);
+                return true;
+            }
+            return false;
+        }
 
-        return true;
+        return false;
     }
 
     void showServicos(){
@@ -156,8 +170,11 @@ int main()
             cin >> cpf;
             cout << "\n";
             cliente = cv.getCliente(cpf);
-            cliente->show();
-            cout << "\n";
+            if(cliente != NULL){
+                cliente->show();
+                cout << "\n";
+            }else
+                cout << "Cliente não encontrado\n" << endl;
 
             sleep(2);
             system("clear");
@@ -199,9 +216,10 @@ int main()
 
 
             cliente = cv.getCliente(cpf);
-            if(cliente->addAnimal(nome, raca))
-                cout << "\nAnimal adicionado!\n" << endl;
-            else
+            if(cliente != NULL){
+                if(cliente->addAnimal(nome, raca))
+                    cout << "\nAnimal adicionado!\n" << endl;
+            }else
                 cout << "\nAnimal não adicionado!\n" << endl;
 
             sleep(2);
@@ -215,9 +233,11 @@ int main()
             cin >> nome;
 
             cliente = cv.getCliente(cpf);
-            if(cliente->rmAnimal(nome))
-                cout << "\nAnimal removido!\n" << endl;
-            else
+
+            if(cliente != NULL){
+                if(cliente->rmAnimal(nome))
+                    cout << "\nAnimal removido!\n" << endl;
+            }else
                 cout << "\nAnimal não removido!\n" << endl;
 
             sleep(2);

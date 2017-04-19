@@ -39,10 +39,12 @@ public:
         return false;
     }
 
-    Animal getAnimalNome(string nome){
+    Animal* getAnimalNome(string nome){
         for(int i = 0; i < (int) animais.size(); i++)
             if(animais[i].getNome() == nome)
-                return animais[i];
+                return &animais[i];
+
+        return NULL;
     }
 
     vector<Animal> getAnimais(){

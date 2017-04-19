@@ -9,15 +9,23 @@ private:
     Cliente cliente;
     Animal animal;
     float valor;
+    int i = 0;
 
 public:
-    Venda(Servico servico, Cliente cliente, Animal animal){
+    Venda(Servico servico, Cliente cliente, Animal animal, int a){
+        string raca;
         this->servico = servico;
         this->cliente = cliente;
         this->animal = animal;
+        this->i = a;
 
-        valor = servico.getPreco();
-        string raca = animal.getRaca();
+        if(i == 4){
+            valor = 0;
+            i = 0;
+        }else{
+            valor = servico.getPreco();
+            raca = animal.getRaca();
+        }
 
         if(raca == "CACHORRO")
             valor *= 1.20;
@@ -25,6 +33,12 @@ public:
             valor *= 1.10;
         if(raca == "URSO")
             valor *= 1.90;
+
+        i++;
+    }
+
+    int getI(){
+        return this->i;
     }
 
     float getValor(){
