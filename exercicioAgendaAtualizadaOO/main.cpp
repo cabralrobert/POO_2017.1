@@ -5,10 +5,9 @@
 
 using namespace std;
 
-int main(   )
+int main()
 {
     GUI gui;
-
     gui.guiLogin();
 
     return 0;

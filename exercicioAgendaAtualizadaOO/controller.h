@@ -32,7 +32,7 @@ public:
     }
 
     bool rmConta(string login, string senha){
-        for(int i = 0; i < contas.size(); i++)
+        for(int i = 0; i < (int) contas.size(); i++)
             if(contas[i].getLogin() == login && contas[i].getSenha() == senha){
                 contas.erase(contas.begin() + i);
                 return true;
@@ -62,19 +62,17 @@ public:
             cin >> op;
 
             if(op == "login"){
-                    cout << "Login: ";
-                    cin >> login;
-                    cout << "Senha: ";
-                    cin >> senha;
-                    agenda = sistema.fazerLogin(login,senha);
-                    if(agenda == NULL){
-                        cout << "Erro no login!" << endl;
-                    else{
-                        cout << "Login com sucesso!" << endl;
-                        sleep(1);
-                        system("clear");
-                        guiAccount();
-                    }
+                cout << "Login: ";
+                cin >> login;
+                cout << "Senha: ";
+                cin >> senha;
+                agenda = sistema.fazerLogin(login,senha);
+                if(agenda == NULL){
+                    cout << "Erro no login!" << endl;
+                }else{
+                    cout << "Login com sucesso!" << endl;
+                    guiAccount();
+                }
             }
 
             else if(op == "cadastro"){
@@ -83,9 +81,9 @@ public:
                 cout << "Senha: ";
                 cin >> senha;
                 if(sistema.criarConta(login,senha))
-                    cout << "Cadastro com sucesso!" << endl;sleep(1);system("clear");
+                    cout << "Cadastro com sucesso!" << endl;
                 else
-                    cout << "Erro no cadastro!" << endl;sleep(1);system("clear");
+                    cout << "Erro no cadastro!" << endl;
             }
 
             else if(op == "remover"){
@@ -94,12 +92,15 @@ public:
                 cout << "Senha: ";
                 cin >> senha;
                 if(sistema.rmConta(login,senha))
-                    cout << "Usuario removido com sucesso!" << endl;sleep(1);system("clear");
+                    cout << "Usuario removido com sucesso!" << endl;
                 else
-                    cout << "Erro ao remover usuario!" << endl;sleep(1);system("clear");
+                    cout << "Erro ao remover usuario!" << endl;
             }
+            sleep(2);
+            system("clear");
         }
     }
+
 
     void guiAccount(){
         string nome;
@@ -111,22 +112,22 @@ public:
             cin >> op;
 
             if(op == "addContato"){
-                    cout << "Nome: ";
-                    cin >> nome;
-                    Contato contato(nome);
-                    if(agenda->adicionaContato(contato))
-                        cout << "Contato adicionado!" << endl;sleep(1);system("clear");
-                    else
-                        cout << "Contato não adicionado!" << endl;sleep(1);system("clear");
+                cout << "Nome: ";
+                cin >> nome;
+                Contato contato(nome);
+                if(agenda->adicionaContato(contato))
+                    cout << "Contato adicionado!" << endl;
+                else
+                    cout << "Contato não adicionado!" << endl;
             }
 
             else if(op == "rmContato"){
                 cout << "Nome: ";
                 cin >> nome;
                 if(agenda->removerContato(nome))
-                    cout << "Removido!" << endl;sleep(1);system("clear");
+                    cout << "Removido!" << endl;
                 else
-                    cout << "Não removido!" << endl;sleep(1);system("clear");
+                    cout << "Não removido!" << endl;
             }
 
             else if(op == "updateContato"){
@@ -138,17 +139,23 @@ public:
 
             else if(op == "pegarTodos"){
                 contatos =  agenda->pegarContatos();
+                cout << "\n############################\n";
                 for(auto i : contatos)
                     i.showContatos();
+                cout << "\n############################\n";
             }
 
             else if(op == "procurarContato"){
                 cout << "Substring: ";
                 cin >> nome;
                 contatos = agenda->procurarPorSubstring(nome);
+                cout << "\n############################\n";
                 for(auto i : contatos)
                     i.showContatos();
+                cout << "\n############################\n";
             }
+            sleep(2);
+            system("clear");
         }
     }
 
@@ -167,18 +174,18 @@ public:
                 cout << "Descrição: ";
                 cin >> desc;
                 if(contato->addTelefone(nome,desc))
-                    cout << "Adicionado!" << endl;sleep(1);system("clear");
+                    cout << "Adicionado!" << endl;
                 else
-                    cout << "Não adicionado!" << endl;sleep(1);system("clear");
+                    cout << "Não adicionado!" << endl;
             }
 
             else if(op == "rmTelefone"){
                 cout << "Numero: ";
                 cin >> nome;
                 if(contato->rmTelefone(nome))
-                    cout << "Telefone não encontrado!" << endl;sleep(1);system("clear");
+                    cout << "Telefone não encontrado!" << endl;
                 else
-                    cout << "Telefone removido!" << endl;sleep(1);system("clear");
+                    cout << "Telefone removido!" << endl;
             }
 
             else if(op == "qtdTelefones"){
@@ -190,23 +197,27 @@ public:
                 cin >> nome;
                 telefone = contato->getTelefone(nome);
                 if(telefone != NULL){
+                    cout << "\n############################\n";
                     cout << "Numero: " << telefone->getNumero()
-                         << "\nDescrição: " << telefone->getDesc() << endl;sleep(2);system("clear");
+                         << "\nDescrição: " << telefone->getDesc() << endl;
+                    cout << "\n############################\n";
                 }else
-                    cout << "Telefone não encontrado!" << endl;sleep(1);system("clear");
+                    cout << "Telefone não encontrado!" << endl;
             }
 
             else if(op == "setEmail"){
                 cout << "Email: ";
                 cin >> nome;
                 if(contato->setEmail(nome))
-                    cout << "Atualizado!" << endl;sleep(1);system("clear");
+                    cout << "Atualizado!" << endl;
                 else
-                    cout << "Não atualizado!" << endl;sleep(1);system("clear");
+                    cout << "Não atualizado!" << endl;
             }
 
             else if(op == "verContato"){
+                cout << "\n############################\n";
                 contato->showContatos();
+                cout << "\n############################\n";
             }
 
             else if(op == "favoritar"){
@@ -215,9 +226,9 @@ public:
                 telefone = contato->getTelefone(nome);
                 if(telefone != NULL){
                     contato->addFavorito(telefone);
-                    cout << "Favorito adicionado!" << endl;sleep(1);system("clear");
+                    cout << "Favorito adicionado!" << endl;
                 }else
-                    cout << "Erro ao adicionar favorito!" << endl;sleep(1);system("clear");
+                    cout << "Erro ao adicionar favorito!" << endl;
             }
 
             else if(op == "desfavoritar"){
@@ -226,15 +237,18 @@ public:
                 telefone = contato->getTelefone(nome);
                 if(telefone != NULL){
                     contato->rmFavorito(telefone);
-                    cout << "Favorito removido!" << endl;sleep(1);system("clear");
+                    cout << "Favorito removido!" << endl;
                 }else
-                    cout << "Erro ao remover favorito!" << endl;sleep(1);system("clear");
+                    cout << "Erro ao remover favorito!" << endl;
             }
 
             else if(op == "pegarFavoritos"){
+                cout << "\n############################\n";
                 contato->showFavoritos();
+                cout << "\n############################\n";
             }
-
+            sleep(2);
+            system("clear");
         }
     }
 };

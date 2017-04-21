@@ -84,7 +84,7 @@ public:
     }
 
     bool rmTelefone(string telefone){
-        for(int i = 0; i < lista_de_telefones.size(); i++){
+        for(int i = 0; i < (int) lista_de_telefones.size(); i++){
             if(lista_de_telefones[i].getNumero() == telefone){
                 if(find(favoritos.begin(), favoritos.end(), lista_de_telefones[i]) != lista_de_telefones.end())
                     favoritos.erase(find(favoritos.begin(), favoritos.end(), lista_de_telefones[i]));
@@ -101,7 +101,7 @@ public:
     }
 
     Telefone* getTelefone(string numero){
-        for(int i = 0; i < lista_de_telefones.size(); i++)
+        for(int i = 0; i < (int)lista_de_telefones.size(); i++)
             if(lista_de_telefones[i].getNumero() == numero)
                 return &lista_de_telefones[i];
 
